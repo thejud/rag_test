@@ -1,4 +1,39 @@
 #!/usr/bin/env python3
+"""
+RAG-enhanced document query system.
+
+This module provides a Retrieval-Augmented Generation (RAG) system that enables 
+semantic search and question-answering over local documents using vector embeddings 
+and various LLM providers.
+
+Key Features:
+- Document processing (PDF, HTML, Markdown, text files)
+- Vector embeddings using SentenceTransformer
+- Persistent vector storage with ChromaDB
+- Multiple LLM providers (OpenAI, Anthropic Claude, Ollama)
+- Chunking with overlap for better context preservation
+
+Example Usage:
+    # Index documents and ask a question
+    python rag_query.py -d ./docs -p "What is machine learning?" -m openai
+    
+    # Use Claude with specific chunk parameters
+    python rag_query.py -d ./knowledge_base -p "Explain neural networks" -m claude -c 800 -o 150
+    
+    # Reindex documents and use verbose logging
+    python rag_query.py -d ./papers -p "What are transformers?" -m gpt-4 -r -v
+
+Classes:
+    DocumentProcessor: Handles loading and chunking of various document formats
+    VectorStore: Manages ChromaDB operations for semantic search
+    LLMClient: Provides unified interface for different LLM providers
+    RAGSystem: Orchestrates the complete RAG pipeline
+
+Environment Variables:
+    OPENAI_API_KEY: OpenAI API key for GPT models
+    ANTHROPIC_API_KEY: Anthropic API key for Claude models
+    RAG_DEFAULT_DOCS: Default document directory (optional)
+"""
 
 import argparse
 import hashlib
