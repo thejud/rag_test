@@ -1,0 +1,52 @@
+write  relatively simple code for learning and experimentation that will: 
+* enable me to use RAG to augment LLM queries with the contents of local documents in a folder of markdown documents. There are several thousand documents currently. I also may want to include other document types like PDF, txt and doc.
+* allow me to send the augmented queries to one of several LLMs:
+   * claude
+   * openAI using a cost-effective model
+   * a local qwen3:8b model hosted locally via ollama
+* This will run initially on my Mac
+* The interface will be a simple script that takes zero or more --docs parameters (with a default I can configure within the script), a 'model' parameter, and the remainder of the text on the CLI input should be the prompt
+* Also provide instructions about how to install and configure any required vector database
+
+Before beginning to write this code, ask any clarifying questions you need to proceed.
+Edit
+
+I'll help you build a RAG system for augmenting LLM queries with local documents. Before I write the code, I have a few clarifying questions:
+
+    Vector Database Preference: Do you have a preference for the vector database? Popular lightweight options for Mac include:
+        Chroma (very simple, file-based)
+        FAISS (Facebook's library, no server needed)
+        Qdrant (can run locally)
+        Or would you prefer something else?
+    Document Processing: For the different document types:
+        For PDFs: Are these text-based PDFs or might some need OCR?
+        For .doc files: Do you mean .docx (modern Word) or legacy .doc files, or both?
+    Chunking Strategy: How would you like to handle document chunking? Options include:
+        Fixed character/token limits
+        Semantic chunking (paragraph/section breaks)
+        Overlapping chunks
+        Do you have a preference for chunk size?
+    API Keys: I assume you'll set up environment variables for the API keys (Claude, OpenAI). Should I include instructions for that?
+    Embedding Model: What embedding model would you prefer? Options:
+        OpenAI's text-embedding-ada-002 (paid)
+        Local models via sentence-transformers (free)
+        Any specific preference?
+    Re-indexing: How do you want to handle document updates? Should the script:
+        Re-index everything each time?
+        Check for new/modified files and update incrementally?
+        Manual re-indexing command?
+    Search Results: How many relevant document chunks should be included in the context? (e.g., top 3-5 most relevant chunks)
+
+These details will help me create the most useful implementation for your needs.
+
+    Let's start with Chroma. I don't know much about the options, so I'd like to start with something simple
+    For now, let's start with text-based PDFs. Let's skip word input for now completely. It can be an added feature. However, I would like to support HTML documents instead.
+    I don't know enough about this. Provide reasonable default behavior. My documents are mostly notes I have written, with some longer book notes. They range from a hundred words, to several thousand words in length.
+    yes, use dotenv for API key management
+    Let's start with the free option. Consider that I may want to change this later, or provide options.
+    re-index using a manuall command line option, e.g. --reindex
+    Provide this as a command line parameter, and provide a reasonable default. I don't know enough about this. Also, provide short (single letter) options for all command line flags. The query should be "-p" or "--prompt", for example.
+
+Edit
+
+Perfect! I'll create a RAG system with those specifications. Let me build this as a Python script with the features you requested.
